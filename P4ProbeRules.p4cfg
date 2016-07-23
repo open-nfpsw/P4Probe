@@ -1,0 +1,362 @@
+{
+    "registers": {
+        "configs": []
+    }, 
+    "tables": {
+        "fwd_ip_tbl": {
+            "rules": [
+                {
+                    "action": {
+                        "type": "fwd_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.0"
+                            }
+                        }
+                    }, 
+                    "name": "p4vm", 
+                    "match": {
+                        "ipv4.dst": {
+                            "value": "1.1.1.1"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "fwd_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.1"
+                            }
+                        }
+                    }, 
+                    "name": "p4vm1", 
+                    "match": {
+                        "ipv4.dst": {
+                            "value": "1.1.1.3"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "fwd_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.2"
+                            }
+                        }
+                    }, 
+                    "name": "p4vm2", 
+                    "match": {
+                        "ipv4.dst": {
+                            "value": "1.1.1.5"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "fwd_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.0"
+                            }
+                        }
+                    }, 
+                    "name": "p4vma", 
+                    "match": {
+                        "ipv4.dst": {
+                            "value": "1.1.1.2"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "fwd_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.1"
+                            }
+                        }
+                    }, 
+                    "name": "p4vmb", 
+                    "match": {
+                        "ipv4.dst": {
+                            "value": "1.1.1.4"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "fwd_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.2"
+                            }
+                        }
+                    }, 
+                    "name": "p4vmc", 
+                    "match": {
+                        "ipv4.dst": {
+                            "value": "1.1.1.6"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "p0"
+                        }
+                    }
+                }
+            ], 
+            "default_rule": {
+                "action": {
+                    "type": "drop_act"
+                }, 
+                "name": "drop"
+            }
+        }, 
+        "encap_tcp_tbl": {
+            "rules": [
+                {
+                    "action": {
+                        "type": "encap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "p0"
+                            }, 
+                            "tag": {
+                                "value": "0"
+                            }
+                        }
+                    }, 
+                    "name": "tcp_0", 
+                    "match": {
+                        "tcp.srcprt": {
+                            "value": "31000"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "v0.0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "encap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "p0"
+                            }, 
+                            "tag": {
+                                "value": "1"
+                            }
+                        }
+                    }, 
+                    "name": "tcp_1", 
+                    "match": {
+                        "tcp.srcprt": {
+                            "value": "31001"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "v0.0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "encap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "p0"
+                            }, 
+                            "tag": {
+                                "value": "2"
+                            }
+                        }
+                    }, 
+                    "name": "tcp", 
+                    "match": {
+                        "tcp.srcprt": {
+                            "value": "31002"
+                        }, 
+                        "standard_metadata.ingress_port": {
+                            "value": "v0.0"
+                        }
+                    }
+                }
+            ], 
+            "default_rule": {
+                "action": {
+                    "type": "fwd_act", 
+                    "data": {
+                        "prt": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                "name": "fwd"
+            }
+        }, 
+        "decap_tbl": {
+            "rules": [
+                {
+                    "action": {
+                        "type": "decap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.0"
+                            }
+                        }
+                    }, 
+                    "name": "vslice_0", 
+                    "match": {
+                        "vslice.slice": {
+                            "value": "0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "decap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.1"
+                            }
+                        }
+                    }, 
+                    "name": "vslice_1", 
+                    "match": {
+                        "vslice.slice": {
+                            "value": "1"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "decap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.2"
+                            }
+                        }
+                    }, 
+                    "name": "vslice_2", 
+                    "match": {
+                        "vslice.slice": {
+                            "value": "2"
+                        }
+                    }
+                }
+            ]
+        }, 
+        "encap_udp_tbl": {
+            "rules": [
+                {
+                    "action": {
+                        "type": "encap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "v0.0"
+                            }, 
+                            "tag": {
+                                "value": "0"
+                            }
+                        }
+                    }, 
+                    "name": "udp_0", 
+                    "match": {
+                        "standard_metadata.ingress_port": {
+                            "value": "v0.0"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "encap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "p0"
+                            }, 
+                            "tag": {
+                                "value": "1"
+                            }
+                        }
+                    }, 
+                    "name": "udp_1", 
+                    "match": {
+                        "standard_metadata.ingress_port": {
+                            "value": "v0.1"
+                        }
+                    }
+                }, 
+                {
+                    "action": {
+                        "type": "encap_act", 
+                        "data": {
+                            "prt": {
+                                "value": "p0"
+                            }, 
+                            "tag": {
+                                "value": "2"
+                            }
+                        }
+                    }, 
+                    "name": "udp_2", 
+                    "match": {
+                        "standard_metadata.ingress_port": {
+                            "value": "v0.2"
+                        }
+                    }
+                }
+            ], 
+            "default_rule": {
+                "action": {
+                    "type": "fwd_act", 
+                    "data": {
+                        "prt": {
+                            "value": "p0"
+                        }
+                    }
+                }, 
+                "name": "fwd"
+            }
+        }
+    }, 
+    "parser_value_sets": {
+        "configs": []
+    }, 
+    "multicast": {
+        "mg3": {
+            "group_id": 3, 
+            "ports": [
+                "p0"
+            ]
+        }, 
+        "mg2": {
+            "group_id": 2, 
+            "ports": [
+                "p0"
+            ]
+        }, 
+        "mg1": {
+            "group_id": 1, 
+            "ports": [
+                "p0"
+            ]
+        }
+    }, 
+    "meters": {
+        "configs": []
+    }
+}
